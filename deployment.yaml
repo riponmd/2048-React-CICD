@@ -17,7 +17,13 @@ spec:
           image: ripon836/2048:latest  # Use your actual Docker image name and tag
           ports:
             - containerPort: 3000  # The port your React app is listening on
-
+          volumeMounts:                     # ✅ Add this block
+            - name: react-logs
+              mountPath: /app/logs
+      volumes:                              # ✅ Add this block under `spec:`
+        - name: react-logs
+          persistentVolumeClaim:
+            claimName: react-pvc
 ---
 apiVersion: v1
 kind: Service
